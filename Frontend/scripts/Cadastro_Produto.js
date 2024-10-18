@@ -43,7 +43,7 @@ formProduto.onsubmit = (evento) => {
             .then((resJSON) => {
                 if(resJSON.status == true){
                     alert(resJSON.mensagem + '. Código gerado: ' + resJSON.codigo + resJSON.tdOK);
-                    // formProduto.reset();
+                    formProduto.reset();
                     exibirProdutos();
                 }
                 else {
