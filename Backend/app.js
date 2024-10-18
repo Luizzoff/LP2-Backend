@@ -4,6 +4,7 @@ import rotaProduto from './rotas/Rota_Produto.js';
 // import rotaUsuario from './rotas/Rota_Usuario.js';
 import express from 'express';
 import cors from 'cors';
+//verificar
 
 const host = "0.0.0.0";
 const porta = 3000;
