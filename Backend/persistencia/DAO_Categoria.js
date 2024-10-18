@@ -56,15 +56,23 @@ export default class DAO_Categoria{
     }
 
 
-    async consultar(){
+    async consultar(termo){
         const conexao = await conectar();
-        const sql = "SELECT * FROM categoria ORDER BY descricao";
-        const [dataBase, campos] = await conexao.execute(sql);
+        let sql = "SELECT * FROM categoria";
+        let parametros = [];
+        if(!isNaN(parseInt(termo))){
+            sql += " WHERE cat_codigo = ?";
+            parametros = [termo];
+        }
+        else
+            sql += " ORDER by cat_descricao";
+        
+        const [dataBase, campos] = await conexao.execute(sql, parametros);
         let listaCategorias=[];
         for(const linha of dataBase){
             const categoria = new Categoria(
-                linha.codigo,
-                linha.descricao
+                linha.cat_codigo,
+                linha.cat_descricao
             );
             listaCategorias.push(categoria);
         }

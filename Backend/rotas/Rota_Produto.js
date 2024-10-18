@@ -5,6 +5,7 @@ const produtoCtrl = new Controle_Produto();
 const rota = Router();
 
 rota
+.get("/", produtoCtrl.consultar)
 .get("/:codigo", produtoCtrl.consultar)
 .post("/", produtoCtrl.gravar)
 .put("/:codigo", produtoCtrl.atualizar)

@@ -91,16 +91,11 @@ export default class DAO_Produto{
             SELECT * FROM produto p 
             INNER JOIN categoria c
             ON p.cat_codigo = c.cat_codigo
-            WHERE
         `;
         let parametros = [];// parametros tem que ser um array
         
-        if(isNaN(parseInt(termo))){
-            sql += " pro_descricao LIKE ?";
-            parametros = ['%'+termo+'%'];    
-        }
-        else{
-            sql += " pro_codigo = ?";
+        if(!isNaN(parseInt(termo))){
+            sql += " WHERE pro_codigo = ?";
             parametros = [termo];
         }
         

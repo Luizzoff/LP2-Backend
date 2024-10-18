@@ -3,7 +3,6 @@ window.onload = exibirProdutos;
 var modo = 'gravar'
 
 formProduto.onsubmit = (evento) => {
-    const codigoInput = document.getElementById('codigo');
     const descricaoInput = document.getElementById('descricao');
     const precoCustoInput = document.getElementById('precoCusto');
     const precoVendaInput = document.getElementById('precoVenda');
@@ -11,7 +10,6 @@ formProduto.onsubmit = (evento) => {
     const urlImagemInput = document.getElementById('urlImagem');
     const dataValidadeInput = document.getElementById('dataValidade');
 
-    const codigo = codigoInput.value;
     const descricao = descricaoInput.value;
     const precoCusto = precoCustoInput.value;
     const precoVenda = precoVendaInput.value;
@@ -19,8 +17,7 @@ formProduto.onsubmit = (evento) => {
     const urlImagem = urlImagemInput.value;
     const dataValidade = new Date(dataValidadeInput.value).toLocaleDateString();
 
-    if (alertaCodigo(codigo) &&
-        alertaDescricao(descricao) &&
+    if (alertaDescricao(descricao) &&
         alertaPrecoCusto(precoCusto) &&
         alertaPrecoVenda(precoVenda) &&
         alertaQtdEstoque(qtdEstoque) &&
@@ -34,7 +31,6 @@ formProduto.onsubmit = (evento) => {
                     "Content-Type":"application/json"
                 },
                 body: JSON.stringify({
-                    "codigo": codigo,
                     "descricao":descricao,
                     "precoCusto":precoCusto,
                     "precoVenda":precoVenda,
@@ -47,7 +43,7 @@ formProduto.onsubmit = (evento) => {
             .then((resJSON) => {
                 if(resJSON.status == true){
                     alert(resJSON.mensagem + '. Código gerado: ' + resJSON.codigo + resJSON.tdOK);
-                    formProduto.reset();
+                    // formProduto.reset();
                     exibirProdutos();
                 }
                 else {
@@ -235,6 +231,8 @@ function exibirProdutos() {
                 <th>Estoque</th>
                 <th>Validade</th>
                 <th>Imagem</th>
+                <th>ID Categoria</th>
+                <th>Categoria</th>
                 <th>####</th>
             </tr>`;
     
@@ -252,6 +250,8 @@ function exibirProdutos() {
                     <td>
                         <img width='32px' heigth='32px' src='${listaProdutos[i].urlImagem}'>
                     </td>
+                    <td>${listaProdutos[i].categoria.codigo}</td>
+                    <td>${listaProdutos[i].categoria.descricao}</td>
                     <td>
                         <button type='button' class='btn btn-danger' onclick='excluir("${listaProdutos[i].codigo}")'>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">

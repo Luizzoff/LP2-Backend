@@ -1,0 +1,19 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "132.226.245.178",
+            "port": 3306,
+            "driver": "MySQL",
+            "database": "LP2_102317240",
+            "username": "102317240",
+            "connectionTimeout": 60,
+            "name": "MySQL XAMPP",
+            "group": "LP2"
+        }
+    ]
+}

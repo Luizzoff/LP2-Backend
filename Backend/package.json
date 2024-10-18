@@ -5,10 +5,7 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "pm2-restart": "pm2 restart servidor",
-    "pm2-stop": "pm2 stop servidor",
-    "pm2-start": "pm2 start app.js --name servidor",
-    "start": "node app.js"
+    "start": "nodemon app.js"
   },
   "keywords": [
     "http",
@@ -27,6 +24,7 @@
     "express": "^4.21.1",
     "gh-pages": "^6.1.1",
     "mysql2": "^3.11.3",
+    "nodemon": "^3.1.7",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.4",
     "react-dom": "^18.3.1",

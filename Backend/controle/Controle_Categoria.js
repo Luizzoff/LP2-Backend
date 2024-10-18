@@ -1,41 +1,28 @@
 import Categoria from "../modelo/Categoria.js";
-import Produto from "../modelo/Produto.js";
 
-export default class Controle_Produto {
+export default class Controle_Categoria {
     gravar(req, res) 
     {
         res.type("application/json");
         if (req.method == 'POST' && req.is("application/json"))
         {
             const descricao  = req.body.descricao;
-            const precoCusto = req.body.precoCusto;
-            const precoVenda = req.body.precoVenda;
-            const qtdEstoque = req.body.qtdEstoque;
-            const urlImagem  = req.body.urlImagem;
-            const dataValidade = req.body.dataValidade;
 
-            if (descricao &&
-                precoCusto && !isNaN(parseInt(precoCusto)) && precoCusto > 0 &&
-                precoVenda && !isNaN(parseInt(precoVenda)) && precoVenda > 0 &&
-                qtdEstoque && !isNaN(parseInt(qtdEstoque)) && qtdEstoque > 0 &&
-                urlImagem &&
-                dataValidade)
+            if (descricao)
             {
-                const categoria = new Categoria(1, "Roupas");
-                const produto = new Produto(0, descricao, precoCusto, precoVenda, qtdEstoque, urlImagem,dataValidade, categoria);                                   
-                
-                produto.gravar()
+                const categoria = new Categoria(descricao);
+                categoria.gravar()
                 .then(()=>{
                     res.status(200).json({
                         "status":true,
-                        "mensagem":"Produto adicionado com sucesso!",
-                        "codigo": produto.codigo
+                        "mensagem":"Categoria adicionada com sucesso!",
+                        "codigo": categoria.codigo
                     });
                 })
                 .catch((erro)=>{
                     res.status(500).json({
                         "status":false,
-                        "mensagem":"Erro ao incluir produto: " + erro.message
+                        "mensagem":"Erro ao incluir categoria: " + erro.message
                     });
                 });
             }
@@ -62,19 +49,19 @@ export default class Controle_Produto {
             const codigo = req.params.codigo;
             if (codigo && codigo > 0)
             {
-                const produto = new Produto();
-                produto.codigo = codigo;
-                produto.deletar()
+                const categoria = new Categoria();
+                categoria.codigo = codigo;
+                categoria.deletar()
                 .then(()=>{
                     res.status(200).json({
                         "status":true,
-                        "mensagem":"Produto excluído com sucesso!",
+                        "mensagem":"Categoria excluído com sucesso!",
                     });
                 })
                 .catch((erro)=>{
                     res.status(500).json({
                         "status":false,
-                        "mensagem":"Erro ao excluir produto: " + erro.message
+                        "mensagem":"Erro ao excluir categoria: " + erro.message
                     });
                 });
             }
@@ -97,34 +84,22 @@ export default class Controle_Produto {
     {
         res.type("application/json");
         if ((req.method == 'PUT' || req.method == 'PATCH') && req.is("application/json")){
-            const codigo = req.body.codigo;
             const descricao = req.body.descricao;
-            const precoCusto = req.body.precoCusto;
-            const precoVenda = req.body.precoVenda;
-            const qtdEstoque = req.body.qtdEstoque;
-            const urlImagem = req.body.urlImagem;
-            const dataValidade = req.body.dataValidade;
 
-            if (codigo && !isNaN(parseInt(codigo)) && codigo > 0 &&
-                descricao &&
-                precoCusto && !isNaN(parseInt(precoCusto)) && precoCusto > 0 &&
-                precoVenda && !isNaN(parseInt(precoVenda)) && precoVenda > 0 &&
-                qtdEstoque && !isNaN(parseInt(qtdEstoque)) && qtdEstoque > 0 &&
-                urlImagem &&
-                dataValidade)
+            if (descricao)
             {
-                const produto = new Produto(codigo, descricao, precoCusto, precoVenda, qtdEstoque,urlImagem,dataValidade);
-                produto.atualizar()
+                const categoria = new Categoria(descricao);
+                categoria.atualizar()
                 .then(()=>{
                     res.status(200).json({
                         "status":true,
-                        "mensagem":"Produto atualizado com sucesso!",
+                        "mensagem":"Categoria atualizada com sucesso!",
                     });
                 })
                 .catch((erro)=>{
                     res.status(500).json({
                         "status":false,
-                        "mensagem":"Erro ao atualizar o produto: " + erro.message
+                        "mensagem":"Erro ao atualizar o categoria: " + erro.message
                     });
                 });
             }
@@ -151,15 +126,15 @@ export default class Controle_Produto {
             const codigo = req.params.codigo;
             if (codigo==null || (!isNaN(codigo) && codigo > 0))
             {
-                const produto = new Produto();
-                produto.consultar(codigo)
-                .then((listaProdutos) =>{
-                    res.status(200).json(listaProdutos);
+                const categoria = new Categoria();
+                categoria.consultar(codigo)
+                .then((listaCategorias) =>{
+                    res.status(200).json(listaCategorias);
                 })
                 .catch((erro) => {
                     res.status(500).json({
                         "status":false,
-                        "mensagem":"Erro ao consultar produtos: " + erro.message    
+                        "mensagem":"Erro ao consultar categorias: " + erro.message    
                     });
                 });
             }
