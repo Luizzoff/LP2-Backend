@@ -1,0 +1,39 @@
+{
+  "name": "servidor",
+  "version": "3.0.0",
+  "description": "Sistema",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "pm2-restart": "pm2 restart servidor",
+    "pm2-stop": "pm2 stop servidor",
+    "pm2-start": "pm2 start app.js --name servidor",
+    "start": "node app.js"
+  },
+  "keywords": [
+    "http",
+    "fipp",
+    "lp2"
+  ],
+  "author": "LuizRJ, IgorMC",
+  "license": "ISC",
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "bootstrap": "^5.3.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "gh-pages": "^6.1.1",
+    "mysql2": "^3.11.3",
+    "react": "^18.3.1",
+    "react-bootstrap": "^2.10.4",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.1",
+    "react-scripts": "5.0.1",
+    "servidor": "file:",
+    "sistema": "file:",
+    "web-vitals": "^2.1.4"
+  }
+}

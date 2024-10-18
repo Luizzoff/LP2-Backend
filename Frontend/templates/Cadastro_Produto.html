@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+        crossorigin="anonymous">
+    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
+    <title>Cadastro de Produto</title>
+    <style>
+        form{
+            font-size: 1.01em;
+            font-weight: 500; 
+        }
+        body{
+            background-color: #d6ae7c
+        }
+        span{
+            font-style: italic;
+        }
+        .corFundo{
+            background-color: #d6ae7c
+        }
+        .tabela{
+            max-width: 400px;
+            width: 100%;
+            overflow: hidden;
+        }
+        .form-control:focus::placeholder{
+            color:#000000;
+        }
+        #titulo {
+            text-align: center;
+            width: 75%;
+            margin: auto;
+            padding: 10px;
+            border: 1px solid rgb(53, 4, 4);
+            border-radius: 0px 20px 0px 20px;
+            font-weight: bold;
+            color: rgb(53, 4, 4);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary p-0">
+        <section class="container-fluid custom-navbar-bg p-0" style="color:#350404; background-color: bisque;">
+            <button style="color:rgb(53, 4, 4); background-color: #ffe4c4;" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+                <ul class="navbar-nav ps-1">
+                    <li class="nav-item">
+                        <img src="../img/enfeite.png" alt="enfeite" width="30" height="30" class="d-inline-block align-text-top" style="margin-top: 5px;" >
+                    </li>
+                    <li class="nav-item ps-3">
+                        <a class="navbar-brand d-flex justify-content-center" href="./Index.html">
+                            <img src="../img/bitstich-logo.png" alt="Logo" width="100" height="100" class="d-inline-block align-text-top" style="margin-left: 0;">
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item d-flex align-items-center">
+                        <img src="../img/wpp-logo.png" alt="Wpp" width="40" height="40" class="d-inline-block align-text-top">
+                        <a class="nav-link disabled" aria-disabled="true">(XX)XXXXX-XXXX</a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <img src="../img/insta-logo.png" alt="Insta" width="40" height="40" class="d-inline-block align-text-top">
+                        <a class="nav-link disabled" aria-disabled="true">@BitStich_Store</a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </nav>  
+
+    <div class="corFundo pt-5">
+        <div class="container w-50">
+            <h3 id="titulo" style="background-color: #ffe4c4;">
+                CADASTRO DE PRODUTO
+            </h3>
+        </div>
+    </div>
+
+    <div class="corFundo pb-4 pt-4">
+        <main class="container w-75">
+            <form class="row g-3 needs-validation" novalidate id="formProduto">
+                <!-- ======================================================================= -->
+                <section class="row pt-4">
+                    <!-- ############### Codigo ############### -->
+                    <article class="col-md-2">
+                        <div>
+                            <label for="codigo" class="form-label">Código:</label>
+                            <input type="number" class="form-control" id="codigo" required>
+                            <span class="invalid-feedback">
+                                Por favor, informe o código do produto!
+                            </span>
+                        </div>
+                    </article>
+                    <!-- ############### Validade ############### -->
+                    <article class="col-md-2">
+                        <label for="dataValidade" class="form-label">Válido até:</label>
+                        <input type="date" class="form-control" id="dataValidade" required>
+                        <span class="invalid-feedback">
+                            Por favor, informe a data de validade!
+                        </span>
+                    </article>
+                    <!-- ############### Descrição ############### -->
+                    <article class="col-md-8">
+                        <label for="descricao" class="form-label">Descrição:</label>
+                        <input type="text" class="form-control" id="descricao" required>
+                        <span class="invalid-feedback">
+                            Por favor, informe a descrição do produto!
+                        </span>
+                    </article>
+                </section>
+                <!-- ======================================================================= -->
+                <section class="row pt-3">
+                    <!-- ############### Preço Custo ############### -->
+                    <article class="col-md-4">
+                        <label for="precoCusto" class="form-label">Preço de Custo:</label>
+                        <div class="input-group has-validation">
+                            <div class="input-group-text" id="inputGroupPrepend">R$</div>
+                            <input type="number" class="form-control" id="precoCusto" aria-describedby="inputGroupPrepend"
+                                required>
+                            <span class="invalid-feedback">
+                                Por favor, informe o preço de custo.
+                            </span>
+                        </div>
+                    </article>
+                    <!-- ############### Preço Venda ############### -->
+                    <article class="col-md-4">
+                        <label for="precoVenda" class="form-label">Preço de Venda:</label>
+                        <div class="input-group has-validation">
+                            <div class="input-group-text" id="inputGroupPrepend">R$</div>
+                            <input type="number" class="form-control" id="precoVenda" aria-describedby="inputGroupPrepend"
+                                required>
+                            <span class="invalid-feedback">
+                                Por favor, informe o preço de venda.
+                            </span>
+                        </div>
+                    </article>
+                    <!-- ############### Estoque ############### -->
+                    <article class="col-md-4">
+                        <label for="qtdEstoque" class="form-label">Estoque:</label>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text" id="inputGroupPrepend">+</span>
+                            <input type="number" class="form-control" id="qtdEstoque" aria-describedby="inputGroupPrepend"
+                                required>
+                            <span class="invalid-feedback">
+                                Por favor, informe a quantidade em estoque deste produto.
+                            </span>
+                        </div>
+                    </article>
+                </section>
+                <!-- ======================================================================= -->
+                <!-- ############### URL Imagem ############### -->
+                <section class="row pt-3">
+                    <section class="col-md-12">
+                        <label for="urlImagem" class="form-label">URL da Imagem:</label>
+                        <input type="url" class="form-control" id="urlImagem" required>
+                        <span class="invalid-feedback">
+                            Por favor, informe a url da imagem deste produto!
+                        </span>
+                    </section>
+                </section>
+                <!-- ======================================================================= -->
+                <!-- ############### BUTTON ############### -->
+                <nav class="pt-4">
+                    <div class="col-15">
+                        <button class="btn btn-success" type="submit" id="botao">Confirmar</button>
+                    </div>
+                </nav>
+            </form>
+        </main>
+        <div id="tabelaProdutos" class="container pt-5 w-75"></div>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous">
+</script>
+<script src="../scripts/Cadastro_Produto.js"></script>
+</html>
