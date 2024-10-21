@@ -10,7 +10,7 @@ export default class Controle_Categoria {
 
             if (descricao)
             {
-                const categoria = new Categoria(descricao);
+                const categoria = new Categoria("",descricao);
                 categoria.gravar()
                 .then(()=>{
                     res.status(200).json({

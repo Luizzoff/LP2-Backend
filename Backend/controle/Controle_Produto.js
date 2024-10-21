@@ -13,38 +13,53 @@ export default class Controle_Produto {
             const qtdEstoque = req.body.qtdEstoque;
             const urlImagem  = req.body.urlImagem;
             const dataValidade = req.body.dataValidade;
-
-            if (descricao &&
-                precoCusto && !isNaN(parseInt(precoCusto)) && precoCusto > 0 &&
-                precoVenda && !isNaN(parseInt(precoVenda)) && precoVenda > 0 &&
-                qtdEstoque && !isNaN(parseInt(qtdEstoque)) && qtdEstoque > 0 &&
-                urlImagem &&
-                dataValidade)
-            {
-                const categoria = new Categoria(1, "Roupas");
-                const produto = new Produto(0, descricao, precoCusto, precoVenda, qtdEstoque, urlImagem,dataValidade, categoria);                                   
-                
-                produto.gravar()
-                .then(()=>{
-                    res.status(200).json({
-                        "status":true,
-                        "mensagem":"Produto adicionado com sucesso!",
-                        "codigo": produto.codigo
-                    });
-                })
-                .catch((erro)=>{
+            const categoria = new Categoria(req.body.categoria.id, req.body.categoria.descricao);
+            categoria.consultar(categoria.id)
+            .then((categ)=>{
+                if(categ===""){
                     res.status(500).json({
                         "status":false,
-                        "mensagem":"Erro ao incluir produto: " + erro.message
+                        "mensagem":"A categoria não existe" + erro.message
                     });
-                });
-            }
-            else {
-                res.status(400).json({
+                }
+                else
+                    if (descricao &&
+                        precoCusto && !isNaN(parseInt(precoCusto)) && precoCusto > 0 &&
+                        precoVenda && !isNaN(parseInt(precoVenda)) && precoVenda > 0 &&
+                        qtdEstoque && !isNaN(parseInt(qtdEstoque)) && qtdEstoque > 0 &&
+                        urlImagem &&
+                        dataValidade)
+                    {
+                        const produto = new Produto(0, descricao, precoCusto, precoVenda, qtdEstoque, urlImagem,dataValidade, categoria);                                   
+                        
+                        produto.gravar()
+                        .then(()=>{
+                            res.status(200).json({
+                                "status":true,
+                                "mensagem":"Produto adicionado com sucesso!",
+                                "codigo": produto.codigo
+                            });
+                        })
+                        .catch((erro)=>{
+                            res.status(500).json({
+                                "status":false,
+                                "mensagem":"Erro ao incluir produto: " + erro.message
+                            });
+                        });
+                    }
+                    else {
+                        res.status(400).json({
+                            "status":false,
+                            "mensagem":"Erro: informações invalidas!"
+                        });
+                    }
+            })
+            .catch((erro)=>{
+                res.status(500).json({
                     "status":false,
-                    "mensagem":"Erro: informações invalidas!"
+                    "mensagem":"Erro ao buscar categoria: " + erro.message
                 });
-            }
+            });
         } 
         else {
             res.status(400).json({
