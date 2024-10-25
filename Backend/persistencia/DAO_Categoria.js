@@ -68,12 +68,14 @@ export default class DAO_Categoria{
             sql += " ORDER by cat_descricao";
         
         const [dataBase, campos] = await conexao.execute(sql, parametros);
+        await conexao.release();
+
         let listaCategorias=[];
         for(const linha of dataBase){
-            const categoria = new Categoria(
-                linha.cat_codigo,
-                linha.cat_descricao
-            );
+            const categoria = {
+                codigo: linha.cat_codigo,
+                descricao: linha.cat_descricao
+            };
             listaCategorias.push(categoria);
         }
         return listaCategorias

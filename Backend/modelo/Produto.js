@@ -41,20 +41,6 @@ export default class Produto {
     set dataValidade(novoDataValidade) { this.#dataValidade = novoDataValidade; }
     set categoria(novoCategoria) { if(novoCategoria instanceof Categoria) this.#categoria = novoCategoria; }
 
-    //########### *** ##########//
-    toJSON(){
-        return {
-            "codigo": this.#codigo,
-            "descricao": this.#descricao,
-            "precoCusto": this.#precoCusto,
-            "precoVenda": this.#precoVenda,
-            "qtdEstoque": this.#qtdEstoque,
-            "urlImagem": this.#urlImagem,
-            "dataValidade": this.#dataValidade,
-            "categoria": this.#categoria
-        }
-    }
-
     async gravar() {
         const produtoDAO = new DAO_Produto();
         await produtoDAO.gravar(this); 

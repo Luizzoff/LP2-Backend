@@ -7,8 +7,8 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
-const host = "0.0.0.0";
-const porta = 4000;
+const host = "localhost";
+const porta = 5000;
 const app = express();
 dotenv.config();
 
@@ -26,12 +26,9 @@ app.use('/produtos', rotaProduto);
 app.use('/categorias', rotaCategoria);
 // app.use('/usuarios', rotaUsuario);
     
-//########## PASTAS DISPONIBILIZADAS ##########//
-app.use(express.static("../Frontend"));
-    
 //########## SERVIDOR ##########//
 app.listen(porta, host, () => {
-    console.log(`Servidor escutando em http://localhost:${porta}/templates/Index.html`)
+    console.log(`Servidor escutando em http://${host}:${porta}`)
 });
     
 //##### PM2 #####//

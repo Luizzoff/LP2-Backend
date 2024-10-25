@@ -14,14 +14,6 @@ export default class Categoria{
     set codigo(novoCodigo) { this.#codigo = novoCodigo; }
     set descricao(novoDescricao) { this.#descricao = novoDescricao; }
 
-
-    toJSON(){
-        return {
-            "codigo": this.#codigo,
-            "descricao": this.#descricao
-        }
-    }
-
     async gravar(){
         const categoriaDAO = new DAO_Categoria();
         await categoriaDAO.gravar(this);

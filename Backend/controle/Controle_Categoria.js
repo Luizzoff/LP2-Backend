@@ -123,7 +123,7 @@ export default class Controle_Categoria {
         res.type("application/json");
         if (req.method=="GET")
         {
-            const codigo = req.params.codigo;
+            let codigo = req.params.codigo;
             if (codigo==null || (!isNaN(codigo) && codigo > 0))
             {
                 const categoria = new Categoria();
