@@ -1,6 +1,6 @@
 import conectar from "./Conexao.js"
 import Produto from "../modelo/Produto.js"
-import Categoria from "../modelo/Categoria.js";
+import { format } from "date-fns";
 
 export default class DAO_Produto{
     constructor(){
@@ -36,7 +36,7 @@ export default class DAO_Produto{
             const conexao = await conectar();
             const sql = `
                 INSERT INTO produto (pro_descricao, pro_precoCusto, pro_precoVenda, pro_qtdEstoque, pro_urlImagem, pro_dataValidade, cat_codigo)
-                values(?,?,?,?,?,str_to_date(?,'%d/%m/%Y'),?)
+                values(?,?,?,?,?,?,?)
             `;
             let parametros = [
                 produto.descricao,
@@ -67,7 +67,7 @@ export default class DAO_Produto{
         if(produto instanceof Produto){
             const conexao = await conectar();
             const sql = `
-                UPDATE produto SET pro_descricao=?, pro_precoCusto=?, pro_precoVenda=?, pro_qtdEstoque=?, pro_urlImagem=?, pro_dataValidade=str_to_date(?,'%d/%m/%Y'), cat_categoria=? 
+                UPDATE produto SET pro_descricao=?, pro_precoCusto=?, pro_precoVenda=?, pro_qtdEstoque=?, pro_urlImagem=?, pro_dataValidade=?, cat_codigo=? 
                 WHERE pro_codigo = ?
             `;
             let parametros = [
@@ -101,20 +101,21 @@ export default class DAO_Produto{
         
         const [dataBase, campos] = await conexao.execute(sql,parametros);
         await conexao.release();
-        
         let listaProdutos = [];
         for(const linha of dataBase){
-            const categoria = new Categoria(linha.cat_codigo, linha.cat_descricao);
-            const produto = new Produto(
-                linha.pro_codigo,
-                linha.pro_descricao,
-                linha.pro_precoCusto,
-                linha.pro_precoVenda,
-                linha.pro_qtdEstoque,
-                linha.pro_urlImagem,
-                linha.pro_dataValidade,
-                categoria // objeto
-            );
+            const produto = {
+                codigo: linha.pro_codigo,
+                descricao: linha.pro_descricao,
+                precoCusto: linha.pro_precoCusto,
+                precoVenda: linha.pro_precoVenda,
+                qtdEstoque: linha.pro_qtdEstoque,
+                urlImagem: linha.pro_urlImagem,
+                dataValidade: format(linha.pro_dataValidade, 'yyyy-MM-dd'),
+                categoria: {
+                    codigo: linha.cat_codigo,
+                    descricao: linha.cat_descricao
+                }
+            };
             listaProdutos.push(produto);
         }
         return listaProdutos;

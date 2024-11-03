@@ -13,8 +13,8 @@ export default class Controle_Produto {
             const qtdEstoque = req.body.qtdEstoque;
             const urlImagem  = req.body.urlImagem;
             const dataValidade = req.body.dataValidade;
-            const categoria = new Categoria(req.body.categoria.id, req.body.categoria.descricao);
-            categoria.consultar(categoria.id)
+            const categoria = new Categoria(req.body.categoria);
+            categoria.consultar(categoria)
             .then((categ)=>{
                 if(categ===""){
                     res.status(500).json({
@@ -31,7 +31,7 @@ export default class Controle_Produto {
                         dataValidade)
                     {
                         const produto = new Produto(0, descricao, precoCusto, precoVenda, qtdEstoque, urlImagem,dataValidade, categoria);                                   
-                        
+                        console.log(categoria);
                         produto.gravar()
                         .then(()=>{
                             res.status(200).json({
@@ -112,14 +112,14 @@ export default class Controle_Produto {
     {
         res.type("application/json");
         if ((req.method == 'PUT' || req.method == 'PATCH') && req.is("application/json")){
-            const codigo = req.body.codigo;
+            const codigo = req.params.codigo;
             const descricao = req.body.descricao;
             const precoCusto = req.body.precoCusto;
             const precoVenda = req.body.precoVenda;
             const qtdEstoque = req.body.qtdEstoque;
             const urlImagem = req.body.urlImagem;
             const dataValidade = req.body.dataValidade;
-
+            const categoria = new Categoria(req.body.categoria.codigo);
             if (codigo && !isNaN(parseInt(codigo)) && codigo > 0 &&
                 descricao &&
                 precoCusto && !isNaN(parseInt(precoCusto)) && precoCusto > 0 &&
@@ -128,7 +128,7 @@ export default class Controle_Produto {
                 urlImagem &&
                 dataValidade)
             {
-                const produto = new Produto(codigo, descricao, precoCusto, precoVenda, qtdEstoque,urlImagem,dataValidade);
+                const produto = new Produto(codigo, descricao, precoCusto, precoVenda, qtdEstoque,urlImagem,dataValidade,categoria);
                 produto.atualizar()
                 .then(()=>{
                     res.status(200).json({

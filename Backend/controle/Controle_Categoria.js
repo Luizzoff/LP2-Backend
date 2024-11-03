@@ -85,10 +85,10 @@ export default class Controle_Categoria {
         res.type("application/json");
         if ((req.method == 'PUT' || req.method == 'PATCH') && req.is("application/json")){
             const descricao = req.body.descricao;
-
-            if (descricao)
+            const codigo = req.params.codigo;
+            if (codigo && !isNaN(codigo) && codigo > 0 && descricao)
             {
-                const categoria = new Categoria(descricao);
+                const categoria = new Categoria(codigo, descricao);
                 categoria.atualizar()
                 .then(()=>{
                     res.status(200).json({

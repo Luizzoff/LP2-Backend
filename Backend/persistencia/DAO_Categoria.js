@@ -48,8 +48,8 @@ export default class DAO_Categoria{
     async atualizar(categoria){
         if(categoria instanceof Categoria){
             const conexao = await conectar();
-            const sql = "UPDATE categoria SET cat_descricao = ?";
-            const parametros = [categoria.descricao];
+            const sql = "UPDATE categoria SET cat_descricao=? WHERE cat_codigo=?";
+            const parametros = [categoria.descricao, categoria.codigo];
             await conexao.execute(sql,parametros);
             await conexao.release();
         }
@@ -64,8 +64,6 @@ export default class DAO_Categoria{
             sql += " WHERE cat_codigo = ?";
             parametros = [termo];
         }
-        else
-            sql += " ORDER by cat_descricao";
         
         const [dataBase, campos] = await conexao.execute(sql, parametros);
         await conexao.release();

@@ -1,26 +1,26 @@
-const url = 'http://localhost:5000/categorias/';
+const url = 'http://localhost:5000/produtos/';
 
-export async function gravar(categoria) {
+export async function gravar(produto) {
     const res = await fetch(url,{
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body: JSON.stringify(categoria)
+        body: JSON.stringify(produto)
     })
     return await res.json();
 }
 
-export async function deletar(categoria) {
-    const res = await fetch(url + categoria.codigo,{
+export async function deletar(produto) {
+    const res = await fetch(url + produto.codigo,{
         method:'DELETE'
     })
     return await res.json();
 }
 
-export async function atualizar(categoria) {
-    const res = await fetch(url + categoria.codigo,{
+export async function atualizar(produto) {
+    const res = await fetch(url + produto.codigo,{
         method:'PUT',
         headers:{'Content-Type':'application/json'},
-        body: JSON.stringify(categoria)
+        body: JSON.stringify(produto)
     })
     return await res.json();
 }

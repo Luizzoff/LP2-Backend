@@ -17,7 +17,11 @@ export default function TelaCadastroProduto(props) {
         precoCusto: "",
         precoVenda: "",
         qtdEstoque: "",
-        urlImagem: ""
+        urlImagem: "",
+		categoria: {
+			codigo: "",
+			descricao: ""
+		}
     });
 
     return (

@@ -9,7 +9,7 @@ export default class Produto {
     #qtdEstoque;
     #urlImagem;
     #dataValidade;
-    #categoria
+    #categoria;
     
     constructor(codigo=0, descricao="", precoCusto=0, precoVenda=0, qtdEstoque=0, urlImagem="", dataValidade="", categoria={})
     {

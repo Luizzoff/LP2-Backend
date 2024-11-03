@@ -29,10 +29,8 @@ export default class Categoria{
         await categoriaDAO.atualizar(this);  
     }
 
-
     async consultar(termo){
         const categoriaDAO = new DAO_Categoria();
         return await categoriaDAO.consultar(termo);
     }
-
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Col, Form, Row, Button } from "react-bootstrap";
 import { consultar } from "../../../services/servicoCategoria"
+import { gravar, atualizar } from "../../../services/servicoProduto"
 
 export default function FormCadastroProduto(props) {
 	const [formValidado, setFormValidado] = useState(false);
@@ -12,7 +13,11 @@ export default function FormCadastroProduto(props) {
 		precoCusto: "",
 		precoVenda: "",
 		qtdEstoque: "",
-		urlImagem: ""
+		urlImagem: "",
+		categoria: {
+			codigo: "",
+			descricao: ""
+		}
 	};
 
 	useEffect(() => {
@@ -26,27 +31,34 @@ export default function FormCadastroProduto(props) {
 	function manipularSubmissao(evento) {
 		const form = evento.currentTarget;
 		if (form.checkValidity()) {
+			setFormValidado(false);
 			if (!props.modoEdicao) {
-				props.setListaProdutos([
-					...props.listaProdutos,
-					props.produtoSelecionado,
-				]);
-				window.alert("Produto inserido com sucesso!");
-				props.setExibirProdutos(true);
-			} else {
-				props.setListaProdutos(
-					props.listaProdutos.map((item) =>
-						item.codigo === props.produtoSelecionado.codigo
-							? props.produtoSelecionado
-							: item
-					)
-				);
-				window.alert("Produto atualizado com sucesso!");
-				props.setModoEdicao(false);
-				props.setExibirProdutos(true);
+				gravar(props.produtoSelecionado)
+					.then((res) => {
+						if (res.status) {
+							props.setProdutoSelecionado(produtoReseta);
+							props.setModoEdicao(false);
+							props.setExibirProdutos(true);
+						}
+						window.alert(res.mensagem);
+					})
+					.catch((erro) => {
+						window.alert(erro.mensagem);
+					})
 			}
-			props.setProdutoSelecionado(produtoReseta);
-		} else {
+			else {
+				atualizar(props.produtoSelecionado)
+					.then((res) => {
+						if (res.status) {
+							props.setProdutoSelecionado(produtoReseta);
+							props.setModoEdicao(false);
+							props.setExibirProdutos(true);
+						}
+						window.alert(res.mensagem);
+					});
+			}
+		}
+		else {
 			setFormValidado(true);
 		}
 		evento.preventDefault();
@@ -56,45 +68,38 @@ export default function FormCadastroProduto(props) {
 	function manipularMudanca(evento) {
 		const elemento = evento.target.name;
 		const valor = evento.target.value;
-		props.setProdutoSelecionado({
-			...props.produtoSelecionado,
-			[elemento]: valor,
-		});
+		if (elemento === 'categoria') {
+			props.setProdutoSelecionado({
+				...props.produtoSelecionado,
+				categoria: { codigo: valor },
+			});
+		}
+		else {
+			props.setProdutoSelecionado({
+				...props.produtoSelecionado,
+				[elemento]: valor,
+			});
+		}
 	}
 
 	return (
 		<Form noValidate validated={formValidado} onSubmit={manipularSubmissao}>
 			<Row>
-				<Col>
-					{/* ########## Código ########## */}
-					<Form.Group className="mb-3">
-						<Form.Label>Categoria</Form.Label>
-						<Form.Select id='categoria' name='categoria'>
-							<option value="">Selecionar</option>
-							{
-								categorias.map((categoria) => {
-									return <option value={categoria.codigo}>
-										{categoria.descricao}
-									</option>
-								})
-							}
-						</Form.Select>
-						{/* <Form.Control
-              required
-              disabled={props.modoEdicao}
-              type="number"
-              id="codigo"
-              name="codigo"
-              value={props.produtoSelecionado.codigo}
-              onChange={manipularMudanca}
-              placeholder="Código"
-            /> */}
-						{/* <Form.Control.Feedback type="invalid">
-              Por favor, informe o código do produto!
-            </Form.Control.Feedback> */}
+				<Col xs={2}>
+					<Form.Group>
+						<Form.Label>Codigo</Form.Label>
+						<Form.Control
+							required
+							disabled={true}
+							type="number"
+							id="codigo"
+							name="codigo"
+							value={props.produtoSelecionado.codigo}
+							placeholder="Código"
+						/>
 					</Form.Group>
 				</Col>
-				<Col>
+				<Col xs={2}>
 					{/* ########## Validade ########## */}
 					<Form.Group className="mb-3">
 						<Form.Label>Válido até: </Form.Label>
@@ -112,7 +117,30 @@ export default function FormCadastroProduto(props) {
 						</Form.Control.Feedback>
 					</Form.Group>
 				</Col>
-				<Col>
+				<Col xs={4}>
+					{/* ########## Categoria ########## */}
+					<Form.Group className="mb-3">
+						<Form.Label>Categoria</Form.Label>
+						<Form.Select
+							required
+							id="categoria"
+							name="categoria"
+							value={props.produtoSelecionado.categoria.codigo}
+							onChange={manipularMudanca}
+						>
+							<option value="">Selecionar</option>
+							{categorias.map((categoria) => (
+								<option key={categoria.codigo} value={categoria.codigo}>
+									{categoria.descricao}
+								</option>
+							))}
+						</Form.Select>
+						<Form.Control.Feedback type="invalid">
+							Por favor, informe a categoria do produto!
+						</Form.Control.Feedback>
+					</Form.Group>
+				</Col>
+				<Col xs={4}>
 					{/* ########## Descrição ########## */}
 					<Form.Group className="mb-3">
 						<Form.Label>Descrição:</Form.Label>
@@ -216,12 +244,12 @@ export default function FormCadastroProduto(props) {
 				<Col>
 					<Button
 						onClick={() => {
-							props.setProdutoSelecionado(produtoReseta)
+							props.setProdutoSelecionado(produtoReseta);
 							props.setModoEdicao(false);
 							props.setExibirProdutos(true);
 						}}
 						type="button"
-						variant={props.modoEdicao ? "warning" : "success"}
+						variant={props.modoEdicao ? "primary" : "success"}
 					>
 						Voltar
 					</Button>
