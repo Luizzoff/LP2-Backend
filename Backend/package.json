@@ -2,10 +2,10 @@
   "name": "lp2_backend",
   "version": "3.0.0",
   "description": "servidor",
-  "main": "app.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node index.js"
   },
   "author": "LuizRJ, IgorMC",
   "license": "ISC",
