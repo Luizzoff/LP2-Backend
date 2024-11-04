@@ -24,12 +24,15 @@ app.use(cors({
 // app.use('/fornecedores', rotaFornecedor);
 app.use('/produtos', rotaProduto);
 app.use('/categorias', rotaCategoria);
+app.use('/', (req, res) =>{
+    res.send("Servidor Escutando !!!");    
+});
 // app.use('/usuarios', rotaUsuario);
     
 //########## SERVIDOR ##########//
-app.listen(porta, host, () => {
-    console.log(`Servidor escutando em http://${host}:${porta}`)
-});
+// app.listen(porta, host, () => {
+//     console.log(`Servidor escutando em http://${host}:${porta}`)
+// });
     
 //##### PM2 #####//
 /*  npm install pm2 --save
