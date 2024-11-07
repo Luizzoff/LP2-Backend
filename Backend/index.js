@@ -30,9 +30,9 @@ app.use('/', (req, res) =>{
 // app.use('/usuarios', rotaUsuario);
     
 //########## SERVIDOR ##########//
-// app.listen(porta, host, () => {
-//     console.log(`Servidor escutando em http://${host}:${porta}`)
-// });
+app.listen(porta, host, () => {
+    console.log(`Servidor escutando em http://${host}:${porta}`)
+});
     
 //##### PM2 #####//
 /*  npm install pm2 --save

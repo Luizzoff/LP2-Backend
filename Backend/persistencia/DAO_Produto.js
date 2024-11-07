@@ -16,7 +16,7 @@ export default class DAO_Produto{
                     pro_precoCusto DECIMAL(10,2) NOT NULL,
                     pro_precoVenda DECIMAL(10,2) NOT NULL,
                     pro_qtdEstoque INT NOT NULL DEFAULT 0,
-                    pro_urlImagem VARCHAR(250) NOT NULL,
+                    pro_urlImagem VARCHAR(500) NOT NULL,
                     pro_dataValidade DATE NOT NULL,
                     cat_codigo INT NOT NULL,
                     CONSTRAINT pk_produtos PRIMARY KEY (pro_codigo),

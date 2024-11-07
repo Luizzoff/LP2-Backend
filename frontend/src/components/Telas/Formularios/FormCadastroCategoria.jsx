@@ -61,7 +61,6 @@ export default function FormCadastroCategoria(props) {
 			<Form.Group className="mb-3" style={{ display: !props.modoEdicao ? "none" : "block" }}>
 				<Form.Label>Código</Form.Label>
 				<Form.Control
-					required
 					disabled={props.modoEdicao}
 					id="codigo"
 					name="codigo"

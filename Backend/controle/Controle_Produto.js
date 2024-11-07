@@ -13,8 +13,8 @@ export default class Controle_Produto {
             const qtdEstoque = req.body.qtdEstoque;
             const urlImagem  = req.body.urlImagem;
             const dataValidade = req.body.dataValidade;
-            const categoria = new Categoria(req.body.categoria);
-            categoria.consultar(categoria)
+            const categoria = new Categoria(req.body.categoria.codigo, req.body.categoria.descricao);
+            categoria.consultar(categoria.codigo)
             .then((categ)=>{
                 if(categ===""){
                     res.status(500).json({

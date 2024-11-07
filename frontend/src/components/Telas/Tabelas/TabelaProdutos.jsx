@@ -101,7 +101,7 @@ export default function TabelaProdutos(props) {
                     })}
                 </tbody>
             </Table>
-            <p>Quantidade de Produtos cadastrados: {props.listaProdutos.length}</p>
+            <p>Quantidade de Produtos cadastrados: {produtos.length}</p>
         </>
     );
 }
