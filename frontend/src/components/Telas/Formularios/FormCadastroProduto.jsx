@@ -67,15 +67,11 @@ export default function FormCadastroProduto(props) {
 
 	function manipularMudanca(evento) {
 		const elemento = evento.target.name;
-		const valor = evento.target.value;
-		console.log(valor);
+		let valor = evento.target.value;
 		if (elemento === 'categoria') {
 			props.setProdutoSelecionado({
 				...props.produtoSelecionado,
-				elemento: { // corrigit
-					codigo: valor.codigo,
-					descricao: valor.descricao	
-				},
+				[elemento]: { codigo: valor }
 			});
 		}
 		else {
@@ -130,12 +126,12 @@ export default function FormCadastroProduto(props) {
 							required
 							id="categoria"
 							name="categoria"
-							value={props.produtoSelecionado.categoria}
+							value={props.produtoSelecionado.categoria.codigo}
 							onChange={manipularMudanca}
 						>
 							<option value="">Selecionar</option>
 							{categorias.map((categoria) => (
-								<option key={categoria.codigo} value={JSON.stringify(categoria)}>
+								<option key={categoria.codigo} value={categoria.codigo}>
 									{categoria.descricao}
 								</option>
 							))}

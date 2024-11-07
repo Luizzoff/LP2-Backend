@@ -1,4 +1,4 @@
-import DAO_Categoria from "../Persistencia/DAO_Categoria.js";
+import DAO_Categoria from "../persistencia/Entidade_Categoria.js";
 
 export default class Categoria{
     #codigo;

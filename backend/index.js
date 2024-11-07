@@ -8,7 +8,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 const host = "0.0.0.0";
-const porta = 4000;
+const porta = 5000;
 const app = express();
 dotenv.config();
 
@@ -33,10 +33,3 @@ app.use('/', (req, res) =>{
 app.listen(porta, host, () => {
     console.log(`Servidor escutando em http://${host}:${porta}`)
 });
-    
-//##### PM2 #####//
-/*  npm install pm2 --save
-    "pm2-restart": "pm2 restart servidor",
-    "pm2-stop": "pm2 stop servidor",
-    "pm2-start": "pm2 start app.js --name servidor",
-*/
