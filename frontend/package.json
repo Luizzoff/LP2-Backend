@@ -1,7 +1,6 @@
 {
   "name": "lp2_frontend",
   "version": "3.0.0",
-  "homepage": "https://luizzoff.github.io/LP2-Sistema",
   "private": true,
   "author": "LuizRJ, IgorMC",
   "dependencies": {
