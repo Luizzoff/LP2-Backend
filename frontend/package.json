@@ -2,7 +2,7 @@
   "name": "lp2_frontend",
   "version": "3.0.0",
   "private": true,
-  "author": "LuizRJ, IgorMC",
+  "author": "LuizSR, IgorMC",
   "dependencies": {
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.0.1",
