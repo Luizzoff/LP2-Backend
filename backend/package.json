@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node index.js"
   },
-  "author": "LuizRJ, IgorMC",
+  "author": "LuizSR, IgorMC",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
