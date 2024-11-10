@@ -2,7 +2,7 @@
 // import rotaFornecedor from './rotas/Rota_Fornecedor.js';
 import rotaProduto from './rotas/Rota_Produto.js';
 import rotaCategoria from './rotas/Rota_Categoria.js';
-// import rotaUsuario from './rotas/Rota_Usuario.js';
+import rotaUsuario from './rotas/Rota_Usuario.js';
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -24,10 +24,10 @@ app.use(cors({
 // app.use('/fornecedores', rotaFornecedor);
 app.use('/produtos', rotaProduto);
 app.use('/categorias', rotaCategoria);
-app.use('/', (req, res) =>{
-    res.send("Servidor Escutando !!!");    
-});
-// app.use('/usuarios', rotaUsuario);
+app.use('/usuarios', rotaUsuario);
+// app.use('/', (req, res) =>{
+//     res.send("Servidor Escutando !!!");    
+// });
     
 //########## SERVIDOR ##########//
 app.listen(porta, host, () => {
