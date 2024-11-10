@@ -25,9 +25,9 @@ app.use(cors({
 app.use('/produtos', rotaProduto);
 app.use('/categorias', rotaCategoria);
 app.use('/usuarios', rotaUsuario);
-// app.use('/', (req, res) =>{
-//     res.send("Servidor Escutando !!!");    
-// });
+app.use('/', (req, res) =>{
+    res.send("Servidor Escutando !!!");    
+});
     
 //########## SERVIDOR ##########//
 app.listen(porta, host, () => {
