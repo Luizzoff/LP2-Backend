@@ -69,7 +69,7 @@ export default function TabelaUsuarios(props) {
           })}
         </tbody>
       </Table>
-      <p>Quantidade de Usuarios cadastrados: {props.listaUsuarios.length}</p>
+      <p>Quantidade de Usuarios cadastrados: </p>
     </>
   );
 }

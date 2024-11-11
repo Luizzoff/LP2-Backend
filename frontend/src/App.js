@@ -22,7 +22,7 @@ function App() {
         <div className="App">
             <ContextoUsuario.Provider value={{ usuario, setUsuario }}>
                 {
-                    !usuario.logado ?
+                    usuario.logado ?
                         <TelaLogin />
                         :
                         <BrowserRouter>

@@ -3,11 +3,9 @@ import { useState } from "react";
 import Pagina from "../layouts/Pagina";
 import FormCadastroUsuario from "./Formularios/FormCadastroUsuario";
 import TabelaUsuarios from "./Tabelas/TabelaUsuarios";
-import { usuarios } from "../../dados/mockUsuarios";
 
 export default function TelaCadastroUsuario(props) {
     const [exibirUsuarios, setExibirUsuarios] = useState(true);
-    const [listaUsuarios, setListaUsuarios] = useState(usuarios);
     const [modoEdicao, setModoEdicao] = useState(false);
     const [usuarioSelecionado, setUsuarioSelecionado] = useState({
         nomeUsuario: "",
@@ -27,17 +25,13 @@ export default function TelaCadastroUsuario(props) {
             {
                 exibirUsuarios ?
                     <TabelaUsuarios
-                        listaUsuarios={listaUsuarios}
                         setExibirUsuarios={setExibirUsuarios}
-                        setListaUsuarios={setListaUsuarios}
                         setUsuarioSelecionado={setUsuarioSelecionado}
                         setModoEdicao={setModoEdicao}
                     />
                     :
                     <FormCadastroUsuario
                         setExibirUsuarios={setExibirUsuarios}
-                        listaUsuarios={listaUsuarios}
-                        setListaUsuarios={setListaUsuarios}
                         modoEdicao={modoEdicao}
                         setModoEdicao={setModoEdicao}
                         usuarioSelecionado={usuarioSelecionado}
