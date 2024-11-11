@@ -31,7 +31,6 @@ export default class Controle_Produto {
                         dataValidade)
                     {
                         const produto = new Produto(0, descricao, precoCusto, precoVenda, qtdEstoque, urlImagem,dataValidade, categoria);                                   
-                        console.log(categoria);
                         produto.gravar()
                         .then(()=>{
                             res.status(200).json({

@@ -1,4 +1,4 @@
-import DAO_Produto from "../persistencia/Entidade_Produto.js";
+import Entidade_Produto from "../persistencia/Entidade_Produto.js";
 import Categoria from "./Categoria.js";
 
 export default class Produto {
@@ -42,22 +42,22 @@ export default class Produto {
     set categoria(novoCategoria) { if(novoCategoria instanceof Categoria) this.#categoria = novoCategoria; }
 
     async gravar() {
-        const produtoDAO = new DAO_Produto();
-        await produtoDAO.gravar(this); 
+        const produtoEntidade = new Entidade_Produto();
+        await produtoEntidade.gravar(this); 
     }
 
     async deletar() {
-        const produtoDAO = new DAO_Produto();
-        await produtoDAO.deletar(this);
+        const produtoEntidade = new Entidade_Produto();
+        await produtoEntidade.deletar(this);
     }
 
     async atualizar() {
-        const produtoDAO = new DAO_Produto();
-        await produtoDAO.atualizar(this);
+        const produtoEntidade = new Entidade_Produto();
+        await produtoEntidade.atualizar(this);
     }
 
     async consultar(termo) {
-        const produtoDAO = new DAO_Produto();
-        return await produtoDAO.consultar(termo);
+        const produtoEntidade = new Entidade_Produto();
+        return await produtoEntidade.consultar(termo);
     }
 }

@@ -22,18 +22,6 @@ export default class Usuario {
     set senha_confirmacao(novaSenhaConfirmacao) {this.#senha_confirmacao = novaSenhaConfirmacao;}
     set perfil(novoPerfil) {this.#perfil = novoPerfil;}
 
-
-    //########### *** ##########//
-    toJSON(){
-        return{
-            "nome":this.#nome,
-            "email":this.#email,
-            "senha":this.#senha,
-            "senha_confirmacao":this.#senha_confirmacao,
-            "perfil":this.#perfil
-        }
-    }
-
     async gravar() {
         const usuarioEntidade = new Entidade_Usuario();
         await usuarioEntidade.gravar(this); 
@@ -49,13 +37,13 @@ export default class Usuario {
         await usuarioEntidade.atualizar(this);
     }
 
-    async buscarAll() {
-        const usuarioEntidade = new Entidade_Usuario();
-        return await usuarioEntidade.buscarAll();
-    }
-
     async consultar(termo) {
         const usuarioEntidade = new Entidade_Usuario();
         return await usuarioEntidade.consultar(termo);
+    }
+
+    async login(termo) {
+        const usuarioEntidade = new Entidade_Usuario();
+        return await usuarioEntidade.login(termo);
     }
 }

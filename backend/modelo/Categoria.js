@@ -1,4 +1,4 @@
-import DAO_Categoria from "../persistencia/Entidade_Categoria.js";
+import Entidade_Categoria from "../persistencia/Entidade_Categoria.js";
 
 export default class Categoria{
     #codigo;
@@ -15,22 +15,22 @@ export default class Categoria{
     set descricao(novoDescricao) { this.#descricao = novoDescricao; }
 
     async gravar(){
-        const categoriaDAO = new DAO_Categoria();
-        await categoriaDAO.gravar(this);
+        const categoriaEntidade = new Entidade_Categoria();
+        await categoriaEntidade.gravar(this);
     }
     
     async deletar(){
-        const categoriaDAO = new DAO_Categoria();
-        await categoriaDAO.deletar(this);
+        const categoriaEntidade = new Entidade_Categoria();
+        await categoriaEntidade.deletar(this);
     }
     
     async atualizar(){
-        const categoriaDAO = new DAO_Categoria();
-        await categoriaDAO.atualizar(this);  
+        const categoriaEntidade = new Entidade_Categoria();
+        await categoriaEntidade.atualizar(this);  
     }
 
     async consultar(termo){
-        const categoriaDAO = new DAO_Categoria();
-        return await categoriaDAO.consultar(termo);
+        const categoriaEntidade = new Entidade_Categoria();
+        return await categoriaEntidade.consultar(termo);
     }
 }

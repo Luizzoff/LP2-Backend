@@ -1,7 +1,7 @@
 import conectar from "./Conexao.js";
 import Categoria from "../modelo/Categoria.js";
 
-export default class DAO_Categoria{
+export default class Entidade_Categoria{
     constructor(){
         this.init();
     }
@@ -13,7 +13,8 @@ export default class DAO_Categoria{
                 CREATE TABLE IF NOT EXISTS categoria (
                     cat_codigo INT NOT NULL AUTO_INCREMENT,
                     cat_descricao VARCHAR(200) NOT NULL,
-                    CONSTRAINT pk_categoria PRIMARY KEY (cat_codigo)
+                    CONSTRAINT pk_categoria PRIMARY KEY (cat_codigo),
+                    CONSTRAINT uk_categoria UNIQUE (cat_descricao) 
                 )
             `;
             await conexao.execute(sql);

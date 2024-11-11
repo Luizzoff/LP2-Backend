@@ -2,10 +2,10 @@ import { Button, Container, Form } from "react-bootstrap";
 import { useContext, useRef, useState } from "react";
 import { ContextoUsuario } from "../../App";
 
-import { consultar } from "../../services/servicoUsuario";
+import { login } from "../../services/servicoUsuario";
 
 export default function Usuario(props) {
-    const nick = useRef();
+    const nome = useRef();
     const senha = useRef();
     const {setUsuario} = useContext(ContextoUsuario)
 
@@ -18,20 +18,20 @@ export default function Usuario(props) {
         const form = evento.currentTarget;
         if (form.checkValidity()) {
             setFormValidado(false);
-            const nickDig = nick.current.value;
+            const nomeDig = nome.current.value;
             const senhaDig = senha.current.value;
-            consultar(nickDig, senhaDig)
+            login(nomeDig, senhaDig)
                 .then((resposta) => {
-                    if (resposta?.status) {
+                    if (resposta?.data.status) {
                         setUsuario({
-                            "usuario":nick,
-                            "perfil": resposta.perfil, 
-                            "logado":true
+                            "nome": nome,
+                            "perfil": resposta.data.perfil, 
+                            "logado": true
                         })
                     }
                     else{
-                        window.alert("Usuario ou senha incorretos!")
-                    }
+                        window.alert(resposta.data.mensagem);
+                    }                    
                 })
                 .catch((erro)=>{
                     window.alert("Erro: " + erro);
@@ -48,11 +48,11 @@ export default function Usuario(props) {
                 <Form.Group className="mt-4 mb-3">
                     <Form.Label>Nome de usuário</Form.Label>
                     <Form.Control
-                        id="nick"
-                        name="nick"
+                        id="nome"
+                        name="nome"
                         type="text"
                         placeholder="Informe o nome de usuário"
-                        ref={nick}
+                        ref={nome}
                         required />
                 </Form.Group>
                 <Form.Group className="mb-3">
@@ -61,7 +61,7 @@ export default function Usuario(props) {
                         id="senha"
                         name="senha"
                         type="password"
-                        placeholder="Password"
+                        placeholder="Informe a sua senha"
                         ref={senha}
                         required />
                     <Form.Control.Feedback type="invalid" className="mt-3">

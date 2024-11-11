@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import { Col, Form, Row, Button } from "react-bootstrap";
 import { consultar } from "../../../services/servicoCategoria"
 import { gravar, atualizar } from "../../../services/servicoProduto"
+import { useDispatch } from "react-redux";
 
 export default function FormCadastroProduto(props) {
+    const dispatch = useDispatch();
+
 	const [formValidado, setFormValidado] = useState(false);
 	const [categorias, setCategorias] = useState([]);
 	const produtoReseta = {
@@ -36,6 +39,7 @@ export default function FormCadastroProduto(props) {
 				gravar(props.produtoSelecionado)
 					.then((res) => {
 						if (res.status) {
+							dispatch({ type: 'gravarPro', payload: props.produtoSelecionado });
 							props.setProdutoSelecionado(produtoReseta);
 							props.setModoEdicao(false);
 							props.setExibirProdutos(true);
@@ -45,11 +49,12 @@ export default function FormCadastroProduto(props) {
 					.catch((erro) => {
 						window.alert(erro.mensagem);
 					})
-			}
-			else {
-				atualizar(props.produtoSelecionado)
+				}
+				else {
+					atualizar(props.produtoSelecionado)
 					.then((res) => {
 						if (res.status) {
+							dispatch({ type: 'atualizarPro', payload: props.produtoSelecionado });
 							props.setProdutoSelecionado(produtoReseta);
 							props.setModoEdicao(false);
 							props.setExibirProdutos(true);

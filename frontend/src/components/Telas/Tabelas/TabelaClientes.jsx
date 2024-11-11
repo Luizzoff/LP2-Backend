@@ -1,6 +1,11 @@
 import { Button, Table } from "react-bootstrap";
+import { deletar } from "../../../services/servicoCliente";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function TabelaClientes(props) {
+    const clientes = useSelector((state) => state.clientes);
+    const dispatch = useDispatch();
+	
 	function atualizarCliente(cliente) {
 		if (window.confirm("Deseja realmente alterar o cliente -> " + cliente.nome)) {
 			props.setClienteSelecionado(cliente);
@@ -8,14 +13,17 @@ export default function TabelaClientes(props) {
 			props.setExibirClientes(false);
 		}
 	}
-
+	
 	function deletarCliente(cliente) {
 		if (window.confirm("Deseja realmente excluir o cliente -> " + cliente.nome)) {
-			//abordagem utilizando a sintaxe permitida da linguagem
-			props.setListaClientes(props.listaClientes.filter((item) => {
-				return item.cpf !== cliente.cpf
-			}));
-			window.alert("Cliente deletado com sucesso!");
+			deletar(cliente)
+			.then((res) => {
+					dispatch({type: 'deletarCli', payload: cliente});
+					window.alert(res.mensagem);
+				})
+				.catch((erro) => {
+					window.alert(erro.mensagem);
+				});
 		}
 	}
 
@@ -44,9 +52,9 @@ export default function TabelaClientes(props) {
 					</tr>
 				</thead>
 				<tbody>
-					{props.listaClientes?.map((cliente) => {
+					{clientes?.map((cliente) => {
 						return (
-							<tr>
+							<tr key={cliente.cpf}>
 								<td>{cliente.nome}</td>
 								<td>{cliente.cpf}</td>
 								<td>{cliente.genero}</td>
@@ -73,7 +81,7 @@ export default function TabelaClientes(props) {
 					})}
 				</tbody>
 			</Table>
-			<p>Quantidade de Clientes cadastrados: {props.listaClientes.length}</p>
+			<p>Quantidade de Clientes cadastrados: {clientes.length}</p>
 		</>
 	);
 }

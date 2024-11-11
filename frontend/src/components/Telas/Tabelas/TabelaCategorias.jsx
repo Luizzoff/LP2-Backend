@@ -1,23 +1,10 @@
-import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Table } from "react-bootstrap";
-import { consultar, deletar } from "../../../services/servicoCategoria"
+import { deletar } from "../../../services/servicoCategoria"
 
 export default function TabelaCategorias(props) {
-    const [categorias, setCategorias] = useState([]);
-
-    const fetchCategorias = () => {
-        consultar()
-            .then((res) => {
-                if (Array.isArray(res))
-                    setCategorias(res);
-                else
-                    window.alert(res.mensagem);
-            });
-    }
-
-    useEffect(() => {
-        fetchCategorias();
-    }, [])
+    const categorias = useSelector((state) => state.categorias);
+    const dispatch = useDispatch();
 
     const atualizarCategoria = (categoria) => {
         if (window.confirm("Deseja realmente alterar a Categoria -> " + categoria.descricao)) {
@@ -31,9 +18,12 @@ export default function TabelaCategorias(props) {
         if (window.confirm("Deseja realmente excluir a categoria -> " + categoria.descricao)) {
             deletar(categoria)
                 .then((res) => {
-                    fetchCategorias();
+                    dispatch({type: 'deletarCat', payload: categoria});
                     window.alert(res.mensagem);
                 })
+                .catch((erro)=>{
+                    window.alert(erro.mensagem);
+                });
         }
     }
 

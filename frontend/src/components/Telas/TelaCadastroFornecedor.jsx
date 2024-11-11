@@ -3,11 +3,9 @@ import { useState } from "react";
 import Pagina from "../layouts/Pagina";
 import FormCadastroFornecedor from "./Formularios/FormCadastroFornecedor";
 import TabelaFornecedores from "./Tabelas/TabelaFornecedores";
-import { fornecedores } from "../../dados/mockFornecedores";
 
 export default function TelaCadastroFornecedor(props) {
     const [exibirFornecedores, setExibirFornecedores] = useState(true);
-    const [listaFornecedores, setListaFornecedores] = useState(fornecedores);
     const [modoEdicao, setModoEdicao] = useState(false);
     const [fornecedorSelecionado, setFornecedorSelecionado] = useState({
         nome: "",
@@ -27,17 +25,13 @@ export default function TelaCadastroFornecedor(props) {
             {
                 exibirFornecedores ?
                     <TabelaFornecedores
-                        listaFornecedores={listaFornecedores}
                         setExibirFornecedores={setExibirFornecedores}
-                        setListaFornecedores={setListaFornecedores}
                         setFornecedorSelecionado={setFornecedorSelecionado}
                         setModoEdicao={setModoEdicao}
                     />
                     :
                     <FormCadastroFornecedor
                         setExibirFornecedores={setExibirFornecedores}
-                        listaFornecedores={listaFornecedores}
-                        setListaFornecedores={setListaFornecedores}
                         modoEdicao={modoEdicao}
                         setModoEdicao={setModoEdicao}
                         fornecedorSelecionado={fornecedorSelecionado}

@@ -1,8 +1,8 @@
 import conectar from "./Conexao.js"
 import Produto from "../modelo/Produto.js"
-import { format } from "date-fns";
+import { format } from 'date-fns';
 
-export default class DAO_Produto{
+export default class Entidade_Produto{
     constructor(){
         this.init();
     }
@@ -102,7 +102,7 @@ export default class DAO_Produto{
         const [dataBase, campos] = await conexao.execute(sql,parametros);
         await conexao.release();
         let listaProdutos = [];
-        for(const linha of dataBase){
+        for(const linha of dataBase){  
             const produto = {
                 codigo: linha.pro_codigo,
                 descricao: linha.pro_descricao,

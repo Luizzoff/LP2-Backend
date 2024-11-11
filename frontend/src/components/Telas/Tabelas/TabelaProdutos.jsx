@@ -1,24 +1,11 @@
 import { Button, Table, Image } from "react-bootstrap";
-import { consultar, deletar } from "../../../services/servicoProduto";
-import { useEffect, useState } from "react";
-import { format } from 'date-fns';
+import { deletar } from "../../../services/servicoProduto";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function TabelaProdutos(props) {
-    const [produtos, setProdutos] = useState([]);
+    const produtos = useSelector((state) => state.produtos);
+    const dispatch = useDispatch();
 
-    const fetchProdutos = () => {
-        consultar()
-            .then((res) => {
-                if (Array.isArray(res))
-                    setProdutos(res);
-                else
-                    window.alert(res.mensagem);
-            });
-    }
-
-    useEffect(() => {
-        fetchProdutos();
-    }, [])
 
     const atualizarProduto = (produto) => {
         if (window.confirm("Deseja realmente alterar o Produto -> " + produto.descricao)) {
@@ -32,9 +19,12 @@ export default function TabelaProdutos(props) {
         if (window.confirm("Deseja realmente excluir o produto -> " + produto.descricao)) {
             deletar(produto)
                 .then((res) => {
-                    fetchProdutos();
+                    dispatch({ type: 'deletarPro', payload: produto });
                     window.alert(res.mensagem);
                 })
+                .catch((erro) => {
+                    window.alert(erro.mensagem);
+                });
         }
     }
 
@@ -80,7 +70,7 @@ export default function TabelaProdutos(props) {
                                         alt="foto"
                                     />
                                 </td>
-                                <td>{format(produto.dataValidade, 'dd-MM-yyyy')}</td>
+                                <td>{produto.dataValidade}</td>
                                 <td>{produto.categoria.codigo} | {produto.categoria.descricao}</td>
                                 <td style={{ whiteSpace: 'nowrap', width: '1%' }}>
                                     <Button onClick={() => { atualizarProduto(produto); }} variant="warning" style={{ marginRight: '1em' }}>

@@ -1,34 +1,39 @@
-import Usuario from "../modelo/Usuario.js"
+import Cliente from "../modelo/Cliente.js";
 
-export default class Controle_Usuario{
+export default class Controle_Cliente {
     gravar(req, res) 
     {
         res.type("application/json");
         if (req.method == 'POST' && req.is("application/json"))
         {
             const nome = req.body.nome;
+            const cpf = req.body.cpf;
+            const genero = req.body.genero;
+            const dataNascimento = req.body.dataNascimento;
+            const telefone = req.body.telefone;
             const email = req.body.email;
-            const senha = req.body.senha;
-            const senha_confirmacao = req.body.senha_confirmacao;
-            const perfil = req.body.perfil;
+            const endereco = req.body.endereco;
+
             if (nome &&
+                cpf &&
+                genero &&
+                dataNascimento &&
+                telefone &&
                 email &&
-                senha &&
-                senha_confirmacao &&
-                perfil)
+                endereco)
             {
-                const usuario = new Usuario(nome, email, senha, senha_confirmacao, perfil);
-                usuario.gravar()
+                const cliente = new Cliente(nome, cpf, genero, dataNascimento, telefone, email, endereco);
+                cliente.gravar()
                 .then(()=>{
                     res.status(200).json({
                         "status":true,
-                        "mensagem":"Usuario adicionado com sucesso!",
+                        "mensagem":"Cliente adicionado com sucesso!",
                     });
                 })
                 .catch((erro)=>{
                     res.status(500).json({
                         "status":false,
-                        "mensagem":"Erro ao incluir usuario: " + erro.message
+                        "mensagem":"Erro ao incluir cliente: " + erro.message
                     });
                 });
             }
@@ -46,27 +51,28 @@ export default class Controle_Usuario{
             });
         }
     }
-    
+
     excluir(req, res)
     {
         res.type("application/json");
         if (req.method == 'DELETE')
         {
-            const nome = req.body.nome;
-            if (nome)
+            const cpf = req.body.cpf;
+            if (cpf)
             {
-                const usuario = new Usuario(nome);
-                usuario.excluir()
+                const cliente = new Cliente();
+                cliente.cpf = cpf;
+                cliente.excluir()
                 .then(()=>{
                     res.status(200).json({
                         "status":true,
-                        "mensagem":"Usuario excluído com sucesso!",
+                        "mensagem":"Cliente excluído com sucesso!",
                     });
                 })
                 .catch((erro)=>{
                     res.status(500).json({
                         "status":false,
-                        "mensagem":"Erro ao excluir usuario: " + erro.message
+                        "mensagem":"Erro ao excluir cliente: " + erro.message
                     });
                 });
             }
@@ -84,33 +90,39 @@ export default class Controle_Usuario{
             });
         }
     }
-    
+
     atualizar(req, res)
     {
         res.type("application/json");
         if ((req.method == 'PUT' || req.method == 'PATCH') && req.is("application/json")){
             const nome = req.body.nome;
-            const senha = req.body.senha;
-            const senha_confirmacao = req.body.senha_confirmacao;
-            const perfil = req.body.perfil;
+            const cpf = req.body.cpf;
+            const genero = req.body.genero;
+            const dataNascimento = req.body.dataNascimento;
+            const telefone = req.body.telefone;
+            const email = req.body.email;
+            const endereco = req.body.endereco;
 
             if (nome &&
-                senha &&
-                senha_confirmacao &&
-                perfil)
+                cpf &&
+                genero &&
+                dataNascimento &&
+                telefone &&
+                email &&
+                endereco)
             {
-                const usuario = new Usuario(nome, "", senha, senha_confirmacao, perfil);
-                usuario.atualizar()
+                const cliente = new Cliente(nome, cpf, genero, dataNascimento, telefone, email, endereco);
+                cliente.atualizar()
                 .then(()=>{
                     res.status(200).json({
                         "status":true,
-                        "mensagem":"Usuario atualizado com sucesso!",
+                        "mensagem":"Cliente atualizado com sucesso!",
                     });
                 })
                 .catch((erro)=>{
                     res.status(500).json({
                         "status":false,
-                        "mensagem":"Erro ao atualizar o usuario: " + erro.message
+                        "mensagem":"Erro ao atualizar o cliente: " + erro.message
                     });
                 });
             }
@@ -128,22 +140,22 @@ export default class Controle_Usuario{
             });
         }    
     }
-    
+
     consultar(req, res)
     {
         res.type("application/json");
         if (req.method=="GET")
         {
-            const termo = req.params.termo;
-            const usuario = new Usuario();
-            usuario.consultar(termo)
-            .then((resp) =>{
-                res.status(200).json(resp);
+            const cpf = req.params.cpf;
+            const cliente = new Cliente();
+            cliente.consultar(cpf)
+            .then((listaClientes) =>{
+                res.status(200).json(listaClientes);
             })
             .catch((erro) => {
                 res.status(500).json({
                     "status":false,
-                    "mensagem":"Erro ao consultar usuario: " + erro.message    
+                    "mensagem":"Erro ao consultar clientes: " + erro.message    
                 });
             });
         }
@@ -151,51 +163,6 @@ export default class Controle_Usuario{
             res.status(400).json({
                 "status":false,
                 "mensagem":"Requisição inválida!, Metodo não é GET"
-            });
-        }    
-    }
-
-    login(req, res)
-    {
-        res.type("application/json");
-        if (req.method=="POST")
-        {
-            const {nome, senha} = req.body;
-            if(nome, senha){
-                const usuario = new Usuario(nome, "", senha);
-                usuario.login(nome)
-                .then((resp) =>{
-                    if(resp && resp.senha == senha){
-                        res.status(200).json({
-                            "status":true,
-                            "perfil": resp.perfil
-                        });
-                    }
-                    else{
-                        res.status(400).json({
-                            "status":false,
-                            "mensagem":"Usuario ou senha Incorretos!"    
-                        });
-                    }
-                })
-                .catch((erro) => {
-                    res.status(500).json({
-                        "status":false,
-                        "mensagem":"Erro ao logar usuario: " + erro.message    
-                    });
-                });
-            }
-            else {
-                res.status(400).json({
-                    "status":false,
-                    "mensagem":"Consulta Invalida!, credencias vazias!"    
-                });
-            }
-        }
-        else {
-            res.status(400).json({
-                "status":false,
-                "mensagem":"Requisição inválida!, Metodo não é POST"
             });
         }    
     }

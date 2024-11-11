@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { gravar, atualizar } from "../../../services/servicoCategoria"
+import { useDispatch } from "react-redux";
 
 export default function FormCadastroCategoria(props) {
+    const dispatch = useDispatch();
+	
 	const [formValidado, setFormValidado] = useState(false);
 	const categoriaReseta = {
 		codigo: "",
 		descricao: ""
 	};
-
+	
 	function manipularSubmissao(evento) {
 		const form = evento.currentTarget;
 		if (form.checkValidity()) {
@@ -17,6 +20,7 @@ export default function FormCadastroCategoria(props) {
 				gravar(props.categoriaSelecionado)
 				.then((res)=>{
 					if(res.status){
+						dispatch({ type: 'gravarCat', payload: props.categoriaSelecionado });
 						props.setCategoriaSelecionado(categoriaReseta);
 						props.setModoEdicao(false);
 						props.setExibirCategorias(true);
@@ -31,6 +35,7 @@ export default function FormCadastroCategoria(props) {
 				atualizar(props.categoriaSelecionado)
 				.then((res)=>{
 					if(res.status){
+						dispatch({ type: 'atualizarCat', payload: props.categoriaSelecionado });
 						props.setCategoriaSelecionado(categoriaReseta);
 						props.setModoEdicao(false);
 						props.setExibirCategorias(true);
