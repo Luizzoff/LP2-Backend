@@ -25,6 +25,7 @@ export default function Usuario(props) {
                     if (resposta?.status) {
                         setUsuario({
                             "usuario":nick,
+                            "perfil": resposta.perfil, 
                             "logado":true
                         })
                     }

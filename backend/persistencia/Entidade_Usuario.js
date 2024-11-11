@@ -80,7 +80,7 @@ export default class DAO_Usuario{
         const [dataBase, campos] = await conexao.execute(sql,parametros);
         await conexao.release();
         if (dataBase.length > 0) {
-            return dataBase[0].senha; // Retorna a senha do primeiro usuário encontrado
+            return { senha: dataBase[0].senha, perfil: dataBase[0].perfil }; // Retorna a senha do primeiro usuário encontrado
         } else {
             return null; // Nenhum usuário encontrado
         }

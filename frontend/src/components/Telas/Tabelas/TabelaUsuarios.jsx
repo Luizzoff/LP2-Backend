@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import { Button, Table } from "react-bootstrap";
+import { ContextoUsuario } from "../../../App";
 
 export default function TabelaUsuarios(props) {
+  const {usuario} = useContext(ContextoUsuario);
+
   function atualizarUsuario(usuario) {
     if (window.confirm("Deseja realmente alterar o Usuario -> " + usuario.nomeUsuario)) {
       props.setUsuarioSelecionado(usuario);
@@ -12,15 +16,16 @@ export default function TabelaUsuarios(props) {
   function deletarUsuario(usuario) {
     if (window.confirm("Deseja realmente excluir o Usuario -> " + usuario.nomeUsuario)) {
       //abordagem utilizando a sintaxe permitida da linguagem
-      props.setListaUsuarios(props.listaUsuarios.filter((item) => {
-        return item.nomeUsuario !== usuario.nomeUsuario
-      }));
+      // props.setListaUsuarios(props.listaUsuarios.filter((item) => {
+      //   return item.nomeUsuario !== usuario.nomeUsuario
+      // }));
       window.alert("Usuario deletado com sucesso!");
     }
   }
 
   return (
     <>
+    { usuario.perfil === 'Admin' &&
       <Button
         className="mb-3"
         variant="primary"
@@ -30,6 +35,7 @@ export default function TabelaUsuarios(props) {
       >
         Adicionar
       </Button>
+    }
       <Table striped bordered hover>
         <thead>
           <tr>

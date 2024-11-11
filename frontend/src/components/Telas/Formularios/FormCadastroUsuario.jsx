@@ -98,7 +98,7 @@ export default function FormCadastroCliente(props) {
         >
           <option value="">Nenhum</option>
           <option value="Admin">Admin</option>
-          <option value="Visitante">Visitante</option>
+          <option value="Gerente">Gerente</option>
           <option value="Normal">Normal</option>
         </Form.Select>
         <Form.Control.Feedback type="invalid">

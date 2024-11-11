@@ -144,10 +144,11 @@ export default class Controle_Usuario{
             {
                 const usuario = new Usuario();
                 usuario.consultar(nick)
-                .then((respSenha) =>{
-                    if(respSenha && respSenha === senha){
+                .then((resp) =>{
+                    if(resp.senha && resp.senha === senha){
                         res.status(200).json({
-                            "status": true
+                            "status": true,
+                            "perfil": resp.perfil
                         });
                     }
                     else{

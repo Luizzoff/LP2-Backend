@@ -15,6 +15,7 @@ export const ContextoUsuario = createContext();
 function App() {
     const [usuario, setUsuario] = useState({
         "usuario": "",
+        "perfil": "",
         "logado": false
     });
 
@@ -22,7 +23,7 @@ function App() {
         <div className="App">
             <ContextoUsuario.Provider value={{ usuario, setUsuario }}>
                 {
-                    usuario.logado ?
+                    !usuario.logado ?
                         <TelaLogin />
                         :
                         <BrowserRouter>
