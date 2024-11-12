@@ -41,7 +41,6 @@ export default class Controle_Produto {
                                         const produto = new Produto(0, descricao, precoCusto, precoVenda, qtdEstoque, urlImagem, dataValidade, categoria, fornecedor);
                                         produto.gravar()
                                             .then(() => {
-                                                console.log("OK 4");
                                                 res.status(200).json({
                                                     "status": true,
                                                     "mensagem": "Produto adicionado com sucesso!",

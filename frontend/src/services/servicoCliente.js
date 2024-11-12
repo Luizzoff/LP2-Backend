@@ -1,5 +1,5 @@
-// const url = 'https://luizzoff-lp2-backend.vercel.app/clientes/';
-const url = 'http://localhost:5000/clientes/'  
+const url = 'https://luizzoff-lp2-backend.vercel.app/clientes/';
+// const url = 'http://localhost:5000/clientes/'  
 
 export async function gravar(cliente) {
     const res = await fetch(url,{
