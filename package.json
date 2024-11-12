@@ -2,7 +2,7 @@
   "name": "lp2_frontend",
   "version": "3.0.0",
   "private": true,
-  "homepage": "https://luizzoff.github.io/LP2-Backend/frontend",
+  "homepage": "https://luizzoff.github.io/LP2-Backend",
   "author": "LuizSR, IgorMC",
   "dependencies": {
     "@testing-library/jest-dom": "^6.6.3",
@@ -47,7 +47,6 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "gh-pages": "^6.2.0"
   }
 }
