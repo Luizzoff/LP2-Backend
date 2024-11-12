@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { gravar, atualizar } from "../../../services/servicoCategoria"
 import { useDispatch } from "react-redux";
@@ -7,11 +7,19 @@ export default function FormCadastroCategoria(props) {
     const dispatch = useDispatch();
 	
 	const [formValidado, setFormValidado] = useState(false);
-	const categoriaReseta = {
+	const [categoriaReseta] = useState({
 		codigo: "",
 		descricao: ""
-	};
-	
+	});
+
+	useEffect(() => { // só pq o codigo vem do banco vira isso
+		if (props.categoriaSelecionado.codigo !== "" && !props.modoEdicao) {
+			dispatch({ type: 'gravarCat', payload: [props.categoriaSelecionado] });
+			props.setCategoriaSelecionado(categoriaReseta);
+			props.setExibirCategorias(true);
+		}
+	}, [props.categoriaSelecionado, props, categoriaReseta, dispatch]);
+
 	function manipularSubmissao(evento) {
 		const form = evento.currentTarget;
 		if (form.checkValidity()) {
@@ -20,10 +28,7 @@ export default function FormCadastroCategoria(props) {
 				gravar(props.categoriaSelecionado)
 				.then((res)=>{
 					if(res.status){
-						dispatch({ type: 'gravarCat', payload: props.categoriaSelecionado });
-						props.setCategoriaSelecionado(categoriaReseta);
-						props.setModoEdicao(false);
-						props.setExibirCategorias(true);
+						props.setCategoriaSelecionado({ ...props.categoriaSelecionado, codigo: res.codigo });
 					}
 					window.alert(res.mensagem);
 				})

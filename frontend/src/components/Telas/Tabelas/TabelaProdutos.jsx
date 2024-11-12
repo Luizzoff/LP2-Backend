@@ -50,6 +50,7 @@ export default function TabelaProdutos(props) {
                         <th>Imagem</th>
                         <th>Validade</th>
                         <th>Categoria</th>
+                        <th>Fornecedor</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -72,6 +73,7 @@ export default function TabelaProdutos(props) {
                                 </td>
                                 <td>{produto.dataValidade}</td>
                                 <td>{produto.categoria.codigo} | {produto.categoria.descricao}</td>
+                                <td>{produto.fornecedor.nome}</td>
                                 <td style={{ whiteSpace: 'nowrap', width: '1%' }}>
                                     <Button onClick={() => { atualizarProduto(produto); }} variant="warning" style={{ marginRight: '1em' }}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">

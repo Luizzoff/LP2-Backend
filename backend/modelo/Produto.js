@@ -1,5 +1,6 @@
 import Entidade_Produto from "../persistencia/Entidade_Produto.js";
 import Categoria from "./Categoria.js";
+import Fornecedor from "./Fornecedor.js";
 
 export default class Produto {
     #codigo;
@@ -10,8 +11,9 @@ export default class Produto {
     #urlImagem;
     #dataValidade;
     #categoria;
+    #fornecedor;
     
-    constructor(codigo=0, descricao="", precoCusto=0, precoVenda=0, qtdEstoque=0, urlImagem="", dataValidade="", categoria={})
+    constructor(codigo=0, descricao="", precoCusto=0, precoVenda=0, qtdEstoque=0, urlImagem="", dataValidade="", categoria={}, fornecedor={})
     {
         this.#codigo=codigo;
         this.#descricao=descricao;
@@ -21,6 +23,7 @@ export default class Produto {
         this.#urlImagem=urlImagem;
         this.#dataValidade=dataValidade;
         this.#categoria=categoria;
+        this.#fornecedor=fornecedor;
     }
     
     get codigo() {return this.#codigo;}
@@ -31,7 +34,8 @@ export default class Produto {
     get urlImagem() {return this.#urlImagem;}
     get dataValidade() {return this.#dataValidade;}
     get categoria() {return this.#categoria;}
-    
+    get fornecedor() {return this.#fornecedor;}
+
     set codigo(novoCodigo) { this.#codigo=novoCodigo; } 
     set descricao(novoDescricao) { this.#descricao = novoDescricao; }
     set precoCusto(novoPrecoCusto) { this.#precoCusto = novoPrecoCusto; }
@@ -40,6 +44,7 @@ export default class Produto {
     set urlImagem(novoUrlImagem) { this.#urlImagem=novoUrlImagem; }
     set dataValidade(novoDataValidade) { this.#dataValidade = novoDataValidade; }
     set categoria(novoCategoria) { if(novoCategoria instanceof Categoria) this.#categoria = novoCategoria; }
+    set fornecedor(novoFornecedor) { if(novoFornecedor instanceof Fornecedor) this.#fornecedor = novoFornecedor; }
 
     async gravar() {
         const produtoEntidade = new Entidade_Produto();

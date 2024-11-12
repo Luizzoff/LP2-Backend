@@ -39,10 +39,10 @@ export async function login(nomeU, senhaU) {
     const res = await fetch(url+"login",{
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body: {
+        body: JSON.stringify({
             nome: nomeU,
             senha: senhaU
-        }
+        })
     })
     return await res.json();
 }

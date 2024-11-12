@@ -13,15 +13,21 @@ import { consultar as getCategorias } from "./services/servicoCategoria.js";
 import { consultar as getClientes } from "./services/servicoCliente";
 import { consultar as getFornecedores } from "./services/servicoFornecedor";
 import { consultar as getProdutos } from "./services/servicoProduto";
+import { consultar as getUsuarios } from "./services/servicoUsuario";
 
 export const ContextoUsuario = createContext();
 
 function App() {
     const dispatch = useDispatch();
+    // const [usuario, setUsuario] = useState({
+    //     "nome": "luiz",
+    //     "perfil": "Admin",
+    //     "logado": true
+    // });
     const [usuario, setUsuario] = useState({
-        "nome": "luiz",
-        "perfil": "Admin",
-        "logado": true
+        "nome": "",
+        "perfil": "",
+        "logado": false
     });
 
     useEffect(() => {
@@ -32,13 +38,11 @@ function App() {
                         if (resposta)
                             dispatch({ type: "setarCat", payload: resposta });
                     });
-
                 getClientes()
                     .then((resposta) => {
                         if (resposta)
                             dispatch({ type: "setarCli", payload: resposta });
                     });
-
                 getFornecedores()
                     .then((resposta) => {
                         if (resposta)
@@ -48,6 +52,11 @@ function App() {
                     .then((resposta) => {
                         if (resposta)
                             dispatch({ type: "setarPro", payload: resposta });
+                    });
+                getUsuarios()
+                    .then((resposta) => {
+                        if (resposta)
+                            dispatch({ type: "setarUsu", payload: resposta });
                     });
 
             } catch (erro) {

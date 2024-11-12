@@ -25,6 +25,7 @@ export default class Controle_Cliente {
                 const cliente = new Cliente(nome, cpf, genero, dataNascimento, telefone, email, endereco);
                 cliente.gravar()
                 .then(()=>{
+                    console.log("OK 2");
                     res.status(200).json({
                         "status":true,
                         "mensagem":"Cliente adicionado com sucesso!",

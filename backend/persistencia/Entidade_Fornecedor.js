@@ -76,10 +76,10 @@ export default class Entidade_Fornecedor {
 
     async consultar(termo){
         const conexao = await conectar();
-        let sql = `SELECT * FROM fornecedores`;
+        let sql = "SELECT * FROM fornecedores";
         let parametros = [];
         if(termo){
-            sql = "WHERE cnpj = ?";
+            sql += " WHERE cnpj = ?";
             parametros = [termo];
         }
         const [dataBase, campos] = await conexao.execute(sql, parametros);

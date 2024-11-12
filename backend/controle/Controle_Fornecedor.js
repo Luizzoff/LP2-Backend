@@ -18,6 +18,7 @@ export default class Controle_Fornecedor {
                 const fornecedor = new Fornecedor(nome, cnpj, telefone, email, endereco);
                 fornecedor.gravar()
                     .then(() => {
+                        console.log("OK 3");
                         res.status(200).json({
                             "status": true,
                             "mensagem": "Fornecedor adicionado com sucesso!",

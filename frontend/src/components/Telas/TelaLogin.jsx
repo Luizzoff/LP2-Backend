@@ -22,19 +22,20 @@ export default function Usuario(props) {
             const senhaDig = senha.current.value;
             login(nomeDig, senhaDig)
                 .then((resposta) => {
-                    if (resposta?.data.status) {
+                    if (resposta?.status) {
                         setUsuario({
                             "nome": nome,
-                            "perfil": resposta.data.perfil, 
+                            "perfil": resposta.perfil, 
                             "logado": true
                         })
+                        window.alert("Logado com Sucesso !");                        
                     }
                     else{
-                        window.alert(resposta.data.mensagem);
+                        window.alert(resposta.mensagem);
                     }                    
                 })
                 .catch((erro)=>{
-                    window.alert("Erro: " + erro);
+                    window.alert("Erro: " + erro.mensagem);
                 })
         }
         else

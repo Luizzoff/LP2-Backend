@@ -19,6 +19,10 @@ export default function TelaCadastroProduto(props) {
 		categoria: {
 			codigo: "",
 			descricao: ""
+		},
+		fornecedor: {
+			cnpj: "",
+			nome: ""
 		}
     });
 

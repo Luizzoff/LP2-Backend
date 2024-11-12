@@ -22,7 +22,7 @@ export default function FormCadastroFornecedor(props) {
                 gravar(props.fornecedorSelecionado)
                     .then((res) => {
                         if (res.status) {
-                            dispatch({ type: 'gravarFor', payload: props.fornecedorSelecionado });
+                            dispatch({ type: 'gravarFor', payload: [props.fornecedorSelecionado] });
                             props.setFornecedorSelecionado(fornecedorReseta);
                             props.setModoEdicao(false);
                             props.setExibirFornecedores(true);

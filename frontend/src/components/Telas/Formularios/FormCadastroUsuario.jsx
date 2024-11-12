@@ -24,7 +24,7 @@ export default function FormCadastroCliente(props) {
                     gravar(props.usuarioSelecionado)
                         .then((res) => {
                             if (res.status) {
-                                dispatch({ type: 'gravarUsu', payload: props.usuarioSelecionado });
+                                dispatch({ type: 'gravarUsu', payload: [props.usuarioSelecionado] });
                                 props.setUsuarioSelecionado(usuarioReseta);
                                 props.setModoEdicao(false);
                                 props.setExibirUsuarios(true);

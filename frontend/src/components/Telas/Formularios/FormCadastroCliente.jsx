@@ -24,7 +24,7 @@ export default function FormCadastroCliente(props) {
 				gravar(props.clienteSelecionado)
 					.then((res) => {
 						if (res.status) {
-                            dispatch({ type: 'gravarCli', payload: props.clienteSelecionado });
+                            dispatch({ type: 'gravarCli', payload: [props.clienteSelecionado] });
 							props.setClienteSelecionado(clienteReseta);
 							props.setModoEdicao(false);
 							props.setExibirClientes(true);
@@ -32,7 +32,7 @@ export default function FormCadastroCliente(props) {
 						window.alert(res.mensagem);
 					})
 					.catch((erro) => {
-                        window.alert(erro.mensagem);
+                        window.alert(erro);
 					})
                 }
                 else {
@@ -47,26 +47,6 @@ export default function FormCadastroCliente(props) {
 						window.alert(res.mensagem);
 					});
 			}
-            // if (!props.modoEdicao) {
-            //     props.setListaClientes([
-            //         ...props.listaClientes,
-            //         props.clienteSelecionado,
-            //     ]);
-            //     window.alert("Cliente inserido com sucesso!");
-            //     props.setExibirClientes(true);
-            // } else {
-            //     props.setListaClientes(
-            //         props.listaClientes.map((item) =>
-            //             item.codigo === props.clienteSelecionado.codigo
-            //                 ? props.clienteSelecionado
-            //                 : item
-            //         )
-            //     );
-            //     window.alert("Cliente atualizado com sucesso!");
-            //     props.setModoEdicao(false);
-            //     props.setExibirClientes(true);
-            // }
-            // props.setClienteSelecionado(clienteReseta);
         }
         else {
             setFormValidado(true);

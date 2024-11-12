@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { Col, Form, Row, Button } from "react-bootstrap";
-import { consultar } from "../../../services/servicoCategoria"
 import { gravar, atualizar } from "../../../services/servicoProduto"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function FormCadastroProduto(props) {
-    const dispatch = useDispatch();
-
+	const dispatch = useDispatch();
+	const listaCategorias = useSelector((state) => state.categorias);
+	const listaFornecedores = useSelector((state) => state.fornecedores);
 	const [formValidado, setFormValidado] = useState(false);
 	const [categorias, setCategorias] = useState([]);
-	const produtoReseta = {
+	const [fornecedores, setFornecedores] = useState([]);
+
+	const [produtoReseta] = useState({
 		codigo: "",
 		dataValidade: "",
 		descricao: "",
@@ -20,16 +22,25 @@ export default function FormCadastroProduto(props) {
 		categoria: {
 			codigo: "",
 			descricao: ""
+		},
+		fornecedor: {
+			cnpj: "",
+			nome: ""
 		}
-	};
+	});
 
 	useEffect(() => {
-		consultar()
-			.then((res) => {
-				if (Array.isArray(res))
-					setCategorias(res);
-			})
-	}, [])
+		setCategorias(listaCategorias);
+		setFornecedores(listaFornecedores);
+	}, [listaCategorias, listaFornecedores])
+
+	useEffect(() => { // só pq o codigo vem do banco vira isso
+		if (props.produtoSelecionado.codigo !== "" && !props.modoEdicao) {
+			dispatch({ type: 'gravarPro', payload: [props.produtoSelecionado] });
+			props.setExibirProdutos(true);
+			props.setProdutoSelecionado(produtoReseta);
+		}
+	}, [props.produtoSelecionado, props, produtoReseta, dispatch]);
 
 	function manipularSubmissao(evento) {
 		const form = evento.currentTarget;
@@ -39,19 +50,16 @@ export default function FormCadastroProduto(props) {
 				gravar(props.produtoSelecionado)
 					.then((res) => {
 						if (res.status) {
-							dispatch({ type: 'gravarPro', payload: props.produtoSelecionado });
-							props.setProdutoSelecionado(produtoReseta);
-							props.setModoEdicao(false);
-							props.setExibirProdutos(true);
+							props.setProdutoSelecionado({ ...props.produtoSelecionado, codigo: res.codigo });
 						}
 						window.alert(res.mensagem);
 					})
 					.catch((erro) => {
 						window.alert(erro.mensagem);
 					})
-				}
-				else {
-					atualizar(props.produtoSelecionado)
+			}
+			else {
+				atualizar(props.produtoSelecionado)
 					.then((res) => {
 						if (res.status) {
 							dispatch({ type: 'atualizarPro', payload: props.produtoSelecionado });
@@ -73,10 +81,25 @@ export default function FormCadastroProduto(props) {
 	function manipularMudanca(evento) {
 		const elemento = evento.target.name;
 		let valor = evento.target.value;
+
 		if (elemento === 'categoria') {
+			const categoriaSelecionado = JSON.parse(valor);
 			props.setProdutoSelecionado({
 				...props.produtoSelecionado,
-				[elemento]: { codigo: valor }
+				categoria: {
+					codigo: categoriaSelecionado.codigo,
+					descricao: categoriaSelecionado.descricao
+				}
+			});
+		}
+		else if (elemento === 'fornecedor') {
+			const fornecedorSelecionado = JSON.parse(valor);
+			props.setProdutoSelecionado({
+				...props.produtoSelecionado,
+				fornecedor: {
+					cnpj: fornecedorSelecionado.cnpj,
+					nome: fornecedorSelecionado.nome
+				}
 			});
 		}
 		else {
@@ -85,7 +108,6 @@ export default function FormCadastroProduto(props) {
 				[elemento]: valor,
 			});
 		}
-		console.log(props.produtoSelecionado);
 	}
 
 	return (
@@ -123,7 +145,7 @@ export default function FormCadastroProduto(props) {
 						</Form.Control.Feedback>
 					</Form.Group>
 				</Col>
-				<Col xs={4}>
+				<Col xs={2}>
 					{/* ########## Categoria ########## */}
 					<Form.Group className="mb-3">
 						<Form.Label>Categoria</Form.Label>
@@ -131,18 +153,55 @@ export default function FormCadastroProduto(props) {
 							required
 							id="categoria"
 							name="categoria"
-							value={props.produtoSelecionado.categoria.codigo}
+							value={JSON.stringify(props.produtoSelecionado.categoria)}
 							onChange={manipularMudanca}
+							isInvalid={formValidado && !props.produtoSelecionado.categoria.codigo}
 						>
-							<option value="">Selecionar</option>
+							<option value={JSON.stringify("")}>Selecionar</option>
 							{categorias.map((categoria) => (
-								<option key={categoria.codigo} value={categoria.codigo}>
+								<option
+									key={categoria.codigo}
+									value={JSON.stringify({
+										codigo: categoria.codigo,
+										descricao: categoria.descricao
+									})}
+								>
 									{categoria.descricao}
 								</option>
 							))}
 						</Form.Select>
 						<Form.Control.Feedback type="invalid">
 							Por favor, informe a categoria do produto!
+						</Form.Control.Feedback>
+					</Form.Group>
+				</Col>
+				<Col xs={2}>
+					{/* ########## Fornecedor ########## */}
+					<Form.Group className="mb-3">
+						<Form.Label>Fornecedor</Form.Label>
+						<Form.Select
+							required
+							id="fornecedor"
+							name="fornecedor"
+							value={JSON.stringify(props.produtoSelecionado.fornecedor)}
+							onChange={manipularMudanca}
+							isInvalid={formValidado && !props.produtoSelecionado.fornecedor.cnpj}
+						>
+							<option value={JSON.stringify("")}>Selecionar</option>
+							{fornecedores.map((fornecedor) => (
+								<option
+									key={fornecedor.cnpj}
+									value={JSON.stringify({
+										cnpj: fornecedor.cnpj,
+										nome: fornecedor.nome
+									})}
+								>
+									{fornecedor.nome}
+								</option>
+							))}
+						</Form.Select>
+						<Form.Control.Feedback type="invalid">
+							Por favor, informe o fornecedor do produto!
 						</Form.Control.Feedback>
 					</Form.Group>
 				</Col>

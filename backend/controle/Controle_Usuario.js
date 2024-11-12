@@ -20,6 +20,7 @@ export default class Controle_Usuario{
                 const usuario = new Usuario(nome, email, senha, senha_confirmacao, perfil);
                 usuario.gravar()
                 .then(()=>{
+                    console.log("OK 5");
                     res.status(200).json({
                         "status":true,
                         "mensagem":"Usuario adicionado com sucesso!",

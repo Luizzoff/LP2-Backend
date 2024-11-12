@@ -1,25 +1,13 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { Button, Table } from "react-bootstrap";
 import { ContextoUsuario } from "../../../App";
-import { consultar, deletar } from "../../../services/servicoUsuario";
+import { deletar } from "../../../services/servicoUsuario";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function TabelaUsuarios(props) {
     const { usuario } = useContext(ContextoUsuario);
-    const [usuarios, setUsuarios] = useState([]);
-
-    const fetchUsuarios = () => {
-        consultar()
-            .then((res) => {
-                if (Array.isArray(res))
-                    setUsuarios(res);
-                else
-                    window.alert(res.mensagem);
-            });
-    }
-
-    useEffect(() => {
-        fetchUsuarios();
-    }, [])
+    const usuarios = useSelector((state) => state.usuarios);
+    const dispatch = useDispatch();
 
     function atualizarUsuario(usuario) {
         if (window.confirm("Deseja realmente alterar o Usuario -> " + usuario.nome)) {
@@ -33,7 +21,7 @@ export default function TabelaUsuarios(props) {
         if (window.confirm("Deseja realmente excluir o Usuario -> " + usuario.nome)) {
             deletar(usuario)
                 .then((res) => {
-                    fetchUsuarios();
+                    dispatch({ type: 'deletarUsu', payload: usuario });
                     window.alert(res.mensagem);
                 })
                 .catch((erro)=>{

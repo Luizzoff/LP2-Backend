@@ -13,6 +13,7 @@ export default class Controle_Categoria {
                 const categoria = new Categoria("",descricao);
                 categoria.gravar()
                 .then(()=>{
+                    console.log("OK 1");
                     res.status(200).json({
                         "status":true,
                         "mensagem":"Categoria adicionada com sucesso!",

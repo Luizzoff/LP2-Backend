@@ -76,14 +76,11 @@ export default class Entidade_Usuario{
 
     async consultar(termo){
         const conexao = await conectar();
-        let sql = "";
+        let sql = "SELECT * FROM usuarios";
         let parametros = [];
         if(termo){
-            sql = `SELECT * FROM usuarios WHERE nome = ?`;
+            sql = ` WHERE nome = ?`;
             parametros = [termo];
-        }
-        else{
-            sql = `SELECT * FROM usuarios`;
         }
         const [dataBase, campos] = await conexao.execute(sql,parametros);
         await conexao.release();
