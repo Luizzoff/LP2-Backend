@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/LP2-Backend/static/css/main.d221dc40.css",
+    "main.js": "/LP2-Backend/static/js/main.0e95927b.js",
+    "static/media/imagem404.png": "/LP2-Backend/static/media/imagem404.22e922b752c5cf81dc1e.png",
+    "index.html": "/LP2-Backend/index.html",
+    "main.d221dc40.css.map": "/LP2-Backend/static/css/main.d221dc40.css.map",
+    "main.0e95927b.js.map": "/LP2-Backend/static/js/main.0e95927b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d221dc40.css",
+    "static/js/main.0e95927b.js"
+  ]
+}
